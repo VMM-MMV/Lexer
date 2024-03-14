@@ -1,14 +1,9 @@
-from Parser import *
+from ELSDParser import *
 import json
 parser = Parser()
 code = '''
-# This is comment
-# Another comment
+Preganncies = 5
 
-
-40;
-"idk";
-42;
 '''
 result = parser.parse(code)
 
