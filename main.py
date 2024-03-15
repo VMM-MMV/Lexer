@@ -7,8 +7,12 @@ code = '''
 
 
 40;
+
+
+40;
 "idk";
 42;
+
 '''
 result = parser.parse(code)
 

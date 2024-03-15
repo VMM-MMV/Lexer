@@ -1,14 +1,16 @@
 import re
 
 Tokens = [
-    [r"^\s+", "WHITESPACE"],
-    [r"^;" , ";"],
-    [r"^\#.*$", "COMMENT"],
-    [r"^\n+", "NEWLINE"],
+    [r"\A\s+", "WHITESPACE"],
+    [r"\A;" , ";"],
+    [r"\A\#.*$", "COMMENT"],
+    # [r"^\n+", "NEWLINE"],
     # [r'^\""".*?"""', "COMMENT"],
-    [r"^\d+", "NUMBER"],
-    [r'^\"(?:[^"\\]|\\.)*"', "STRING"],
-    [r"^\'(?:[^'\\]|\\.)*'", "STRING"],
+    [r"\A\d+", "NUMBER"],
+    [r'\A"[^"]*"', "STRING"],
+    [r"\A'[^'']*'", "STRING"],
+    # [r'^\"(?:[^"\\]|\\.)*"', "STRING"],
+    # [r"^\'(?:[^'\\]|\\.)*'", "STRING"],
 ]
 
 class Tokenizer:
