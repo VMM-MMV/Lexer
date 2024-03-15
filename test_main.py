@@ -20,7 +20,7 @@ class TokenizerTests(unittest.TestCase):
 class ParserTests(unittest.TestCase):
     def test_numeric_literal(self):
         parser = Parser()
-        program = parser.parse("123")
+        program = parser.parse("123;")
         self.assertEqual(program, {
             'type': 'Program',
             'body': {
@@ -28,6 +28,30 @@ class ParserTests(unittest.TestCase):
                 'value': 123
             }
         })
+    def test_variable_declaration(self):
+        parser = Parser()
+        program = parser.parse("let a = 5;")
+        self.assertEqual(program, {
+        "type": "Program",
+        "body": [
+            {
+            "type": "VariableDeclaration",
+            "declarations": {
+                "type": "VariableDeclarator",
+                "id": {
+                "type": "Identifier",
+                "name": "a"
+                },
+                "init": {
+                "type": "NumericLiteral",
+                "value": 5
+                }
+            }
+            }
+        ]
+        })
+
+        
 
 
 if __name__ == '__main__':

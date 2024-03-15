@@ -3,6 +3,7 @@ import json
 parser = Parser()
 code = """
 let a = 5;
+"a";
 """
 result = parser.parse(code)
 

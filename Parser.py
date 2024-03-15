@@ -26,10 +26,10 @@ class Parser:
 
     # Statement : ExpressionStatement ;
     def Statement(self):
-        return self.VariableDeclaration()
-        # match self._lookahead:
+        if self._lookahead["type"] == "DECLARATOR":
+            return self.VariableDeclaration()
 
-        #     self.ExpressionStatement()
+        return self.ExpressionStatement()
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):
