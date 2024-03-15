@@ -3,9 +3,8 @@ import re
 Tokens = [
     [r"\A\s+", "WHITESPACE"],
     [r"\A;" , ";"],
+    [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
     [r"\A\#.*$", "COMMENT"],
-    # [r"^\n+", "NEWLINE"],
-    # [r'^\""".*?"""', "COMMENT"],
     [r"\A\d+", "NUMBER"],
     [r'\A"[^"]*"', "STRING"],
     [r"\A'[^'']*'", "STRING"],
@@ -33,7 +32,10 @@ class Tokenizer:
             if len(match) == 0:
                 continue
 
-            if literal_type in ["WHITESPACE", "COMMENT", "NEWLINE"]:
+            if literal_type in ["WHITESPACE", "BCOMMENT","COMMENT", "NEWLINE"]:
+                if literal_type == "BCOMMENT":
+                    self._coursor += 6
+
                 self._coursor += len(match[0])
                 return self.getNextToken()
             

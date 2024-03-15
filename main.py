@@ -2,9 +2,11 @@ from Parser import *
 import json
 parser = Parser()
 code = '''
-# This is comment
-# Another comment
-
+""" 
+This is comment
+Another comment
+'HI' 
+"""
 
 40;
 
