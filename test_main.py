@@ -22,12 +22,18 @@ class ParserTests(unittest.TestCase):
         parser = Parser()
         program = parser.parse("123;")
         self.assertEqual(program, {
-            'type': 'Program',
-            'body': {
-                'type': 'NumericLiteral',
-                'value': 123
+        "type": "Program",
+        "body": [
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumericLiteral",
+                "value": 123
             }
+            }
+        ]
         })
+
     def test_variable_declaration(self):
         parser = Parser()
         program = parser.parse("let a = 5;")
@@ -46,6 +52,57 @@ class ParserTests(unittest.TestCase):
                 "type": "NumericLiteral",
                 "value": 5
                 }
+            }
+            }
+        ]
+        })
+    
+    def test_big_comment(self):
+        parser = Parser()
+        program = parser.parse('''
+        """ 
+        This is comment
+        Another comment
+        This thing will not be read
+        """
+
+        40;
+
+
+        40;
+        "idk";
+        42;
+
+        ''')
+        self.assertEqual(program, {
+        "type": "Program",
+        "body": [
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumericLiteral",   
+                "value": 40
+            }
+            },
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumericLiteral",
+                "value": 40
+            }
+            },
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "StringLiteral",
+                "value": "\"idk\""
+            }
+            },
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "NumericLiteral",
+                "value": 42
             }
             }
         ]
