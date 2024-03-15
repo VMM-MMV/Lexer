@@ -1,8 +1,7 @@
 import re
 
-code = ''';
-  some code;
+code = ''''== 5;\n'
 '''
 
-comments = re.findall(r"^;" , code, flags=re.MULTILINE)
+comments = re.findall(r'\A=(?!=)', code, flags=re.MULTILINE)
 print(comments)

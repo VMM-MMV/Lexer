@@ -26,7 +26,10 @@ class Parser:
 
     # Statement : ExpressionStatement ;
     def Statement(self):
-        return self.ExpressionStatement()
+        return self.VariableDeclaration()
+        # match self._lookahead:
+
+        #     self.ExpressionStatement()
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):
@@ -35,6 +38,32 @@ class Parser:
         return {
             "type": "ExpressionStatement",
             "expression": expression
+        }
+    
+    def VariableDeclaration(self):
+        declaration = self.VariableDeclarator()
+        self._eat(";")
+        return {
+            "type": "VariableDeclaration",
+            "declarations": declaration
+        }
+    
+    def VariableDeclarator(self):
+        self._eat("DECLARATOR")
+        identifier = self.Identifier()
+        self._eat("DECLARATOR_OPERATOR")
+        literal = self.Literal()
+        return {
+            "type": "VariableDeclarator",
+            "id": identifier,
+            "init": literal
+        }
+    
+    def Identifier(self):
+        token = self._eat("IDENTIFIER")
+        return {
+            "type": "Identifier",
+            "name": token["value"]
         }
     
     # Expression : Literal ;

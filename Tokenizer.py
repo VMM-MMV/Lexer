@@ -5,6 +5,9 @@ Tokens = [
     [r"\A;" , ";"],
     [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
     [r"\A\#.*$", "COMMENT"],
+    [r"\A\blet\b", "DECLARATOR"],
+    [r"\A[^\s\W\d]", "IDENTIFIER"],
+    [r'\A=(?!=)', "DECLARATOR_OPERATOR"],
     [r"\A\d+", "NUMBER"],
     [r'\A"[^"]*"', "STRING"],
     [r"\A'[^'']*'", "STRING"],
@@ -32,14 +35,14 @@ class Tokenizer:
             if len(match) == 0:
                 continue
 
+            self._coursor += len(match[0])
+
             if literal_type in ["WHITESPACE", "BCOMMENT","COMMENT", "NEWLINE"]:
                 if literal_type == "BCOMMENT":
                     self._coursor += 6
 
-                self._coursor += len(match[0])
                 return self.getNextToken()
             
-            self._coursor += len(match[0])
             return {
                 "type": literal_type,
                 "value": match[0]
