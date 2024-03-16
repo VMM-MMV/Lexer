@@ -71,15 +71,15 @@ class Parser:
     
     # Expression : Literal ;
     def Expression(self):
-        return self.AdditiveLiteral()
+        return self.AdditiveExpression()
     
-    def AdditiveLiteral(self):
-        left = self.Literal()
+    def AdditiveExpression(self):
+        left = self.MultiplicativeExpression()
 
         while self._lookahead["type"] == "ADDITIVE_OPERATOR":
             operator = self._eat("ADDITIVE_OPERATOR")
 
-            right = self.Literal()
+            right = self.MultiplicativeExpression()
 
             left = {
                 "type": "BinaryExpression",
@@ -89,6 +89,25 @@ class Parser:
             }
         return left
     
+    def MultiplicativeExpression(self):
+        left = self.PrimaryExpression()
+
+        while self._lookahead["type"] == "MULTIPLICATIVE_OPERATOR":
+            operator = self._eat("MULTIPLICATIVE_OPERATOR")
+
+            right = self.PrimaryExpression()
+
+            left = {
+                "type": "BinaryExpression",
+                "left": left,
+                "operator": operator,
+                "right": right
+            }
+        return left
+    
+    def PrimaryExpression(self):
+        return self.Literal()
+
     # Literal : NumericLiteral | StringLiteral ;
     def Literal(self):
         match self._lookahead["type"]:
