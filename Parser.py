@@ -40,6 +40,7 @@ class Parser:
             "expression": expression
         }
     
+    # VariableDeclaration : VariableDeclarator ';' ;
     def VariableDeclaration(self):
         declaration = self.VariableDeclarator()
         self._eat(";")
@@ -48,6 +49,7 @@ class Parser:
             "declarations": declaration
         }
     
+    # VariableDeclarator : DECLARATOR Indentifier DECLARATOR_OPERATOR
     def VariableDeclarator(self):
         self._eat("DECLARATOR")
         identifier = self.Identifier()
@@ -59,6 +61,7 @@ class Parser:
             "init": literal
         }
     
+    # Identifier : IDENTIFIER ;
     def Identifier(self):
         token = self._eat("IDENTIFIER")
         return {
@@ -76,6 +79,7 @@ class Parser:
             case "STRING": return self.StringLiteral()
             case "NUMBER": return self.NumericLiteral()
 
+    # NumericLiteral : NUMBER ;
     def NumericLiteral(self):
         token = self._eat("NUMBER")
         return {
@@ -83,6 +87,7 @@ class Parser:
             "value": int(token["value"])
         }
     
+    # StringLiteral : STRING ;
     def StringLiteral(self):
         token = self._eat("STRING")
         return {
