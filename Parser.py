@@ -15,21 +15,51 @@ class Parser:
             "body": self.StatementList()
         }
     
+    def BlockStatement(self):
+        self._eat("{")
+        statement_list = self.StatementList()
+        self._eat("}")
+        return {
+            "type": "BlockStatement",
+            "body": statement_list
+        }
+
+    def IfStatement(self):
+        self._eat("IF")
+        binary_expression = self.ParanthesizedExpression()
+        block_statement = self.BlockStatement()
+        return {
+            "type": "IfStatement",
+            "BooleanStatement": binary_expression,
+            "Consequent": block_statement
+        }
+
+    # def AlternateIf(self):
+    #     if self._lookahead["type"] == "ELIF":
+           
+    #     self._eat("")
+    
+    # def Altern
+
+
+    
     # StatementList : Statement | StatementList Statement ;
     def StatementList(self):
         statementList = []
         
         while self._lookahead != None:
+            if self._lookahead["type"] == "}":
+                break
             statementList.append(self.Statement())
         
         return statementList
 
     # Statement : ExpressionStatement ;
     def Statement(self):
-        if self._lookahead["type"] == "DECLARATOR":
-            return self.VariableDeclaration()
-
-        return self.ExpressionStatement()
+        match self._lookahead["type"]:
+            case "DECLARATOR": return self.VariableDeclaration()
+            case "IF": return self.IfStatement()
+            case _: return self.ExpressionStatement()
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):

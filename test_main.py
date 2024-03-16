@@ -45,7 +45,7 @@ class ParserTests(unittest.TestCase):
             "declarations": {
                 "type": "VariableDeclarator",
                 "id": {
-                "type": "Identifier",
+                "type": "Variable",
                 "name": "a"
                 },
                 "init": {
@@ -57,6 +57,100 @@ class ParserTests(unittest.TestCase):
         ]
         })
     
+    def test_variable_equality(self):
+        parser = Parser()
+        program = parser.parse("a == b + a;")
+        self.assertEqual(program, {
+        "type": "Program",
+        "body": [
+            {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "BinaryExpression",
+                "left": {
+                "type": "Variable",
+                "name": "a"
+                },
+                "operator": {
+                "type": "EQUAL_OPERATOR",
+                "value": "=="
+                },
+                "right": {
+                "type": "BinaryExpression",
+                "left": {
+                    "type": "Variable",
+                    "name": "b"
+                },
+                "operator": {
+                    "type": "ADDITIVE_OPERATOR",
+                    "value": "+"
+                },
+                "right": {
+                    "type": "Variable",
+                    "name": "a"
+                }
+                }
+            }
+            }
+        ]
+        })
+
+    def test_binary_operations(self):
+        parser = Parser()
+        program = parser.parse("let a = (2 + 32 * 54) * 42;")
+        self.assertEqual(program, {
+        "type": "Program",
+        "body": [
+            {
+            "type": "VariableDeclaration",
+            "declarations": {
+                "type": "VariableDeclarator",
+                "id": {
+                "type": "Variable",
+                "name": "a"
+                },
+                "init": {
+                "type": "BinaryExpression",
+                "left": {
+                    "type": "BinaryExpression",
+                    "left": {
+                    "type": "NumericLiteral",
+                    "value": 2
+                    },
+                    "operator": {
+                    "type": "ADDITIVE_OPERATOR",
+                    "value": "+"
+                    },
+                    "right": {
+                    "type": "BinaryExpression",
+                    "left": {
+                        "type": "NumericLiteral",
+                        "value": 32
+                    },
+                    "operator": {
+                        "type": "MULTIPLICATIVE_OPERATOR",
+                        "value": "*"
+                    },
+                    "right": {
+                        "type": "NumericLiteral",
+                        "value": 54
+                    }
+                    }
+                },
+                "operator": {
+                    "type": "MULTIPLICATIVE_OPERATOR",
+                    "value": "*"
+                },
+                "right": {
+                    "type": "NumericLiteral",
+                    "value": 42
+                }
+                }
+            }
+            }
+        ]
+        })
+
     def test_big_comment(self):
         parser = Parser()
         program = parser.parse('''
