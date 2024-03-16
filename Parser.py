@@ -107,9 +107,15 @@ class Parser:
     
     def PrimaryExpression(self):
         match self._lookahead["type"]:
-            case "STRING": return self.Literal()
-            case "NUMBER": return self.Literal()
             case "VARIABLE": return self.Variable()
+            case "(": return self.ParanthesizedExpression()
+            case _: return self.Literal()
+
+    def ParanthesizedExpression(self):
+        self._eat("(")
+        expression = self.Expression()
+        self._eat(")")
+        return expression
 
     # Literal : NumericLiteral | StringLiteral ;
     def Literal(self):

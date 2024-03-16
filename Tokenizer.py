@@ -3,6 +3,8 @@ import re
 Tokens = [
     [r"\A\s+", "WHITESPACE"],
     [r"\A;" , ";"],
+    [r"\A[(]", "("],
+    [r"\A[)]", ")"],
     [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
     [r"\A\#.*$", "COMMENT"],
     [r"\A\blet\b", "DECLARATOR"],
