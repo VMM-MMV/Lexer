@@ -52,26 +52,26 @@ class Parser:
     # VariableDeclarator : DECLARATOR Indentifier DECLARATOR_OPERATOR
     def VariableDeclarator(self):
         self._eat("DECLARATOR")
-        identifier = self.Identifier()
+        variable = self.Variable()
         self._eat("DECLARATOR_OPERATOR")
-        literal = self.Literal()
+        literal = self.Expression()
         return {
             "type": "VariableDeclarator",
-            "id": identifier,
+            "id": variable,
             "init": literal
-        }
-    
-    # Identifier : IDENTIFIER ;
-    def Identifier(self):
-        token = self._eat("IDENTIFIER")
-        return {
-            "type": "Identifier",
-            "name": token["value"]
         }
     
     # Expression : Literal ;
     def Expression(self):
         return self.AdditiveExpression()
+    
+    # Variable : VARIABLE ;
+    def Variable(self):
+        token = self._eat("VARIABLE")
+        return {
+            "type": "Variable",
+            "name": token["value"]
+        }
     
     def AdditiveExpression(self):
         left = self.MultiplicativeExpression()
@@ -106,7 +106,10 @@ class Parser:
         return left
     
     def PrimaryExpression(self):
-        return self.Literal()
+        match self._lookahead["type"]:
+            case "STRING": return self.Literal()
+            case "NUMBER": return self.Literal()
+            case "VARIABLE": return self.Variable()
 
     # Literal : NumericLiteral | StringLiteral ;
     def Literal(self):

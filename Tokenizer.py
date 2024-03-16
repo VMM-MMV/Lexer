@@ -6,7 +6,7 @@ Tokens = [
     [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
     [r"\A\#.*$", "COMMENT"],
     [r"\A\blet\b", "DECLARATOR"],
-    [r"\A[^\s\W\d]", "IDENTIFIER"],
+    [r"\A[^\s\W\d]", "VARIABLE"],
     [r'\A=(?!=)', "DECLARATOR_OPERATOR"],
     [r'\A[+\-]', "ADDITIVE_OPERATOR"],
     [r'\A[*\/]', "MULTIPLICATIVE_OPERATOR"],
