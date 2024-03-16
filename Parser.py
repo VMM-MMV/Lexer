@@ -76,18 +76,6 @@ class Parser:
     def BinaryExpression(self):
         left = self.MultiplicativeExpression()
 
-        while self._lookahead["type"] == "EQUAL_OPERATOR":
-            operator = self._eat("EQUAL_OPERATOR")
-
-            right = self.MultiplicativeExpression()
-
-            left = {
-                "type": "BinaryExpression",
-                "left": left,
-                "operator": operator,
-                "right": right
-            }
-
         while self._lookahead["type"] == "ADDITIVE_OPERATOR":
             operator = self._eat("ADDITIVE_OPERATOR")
 
@@ -99,6 +87,19 @@ class Parser:
                 "operator": operator,
                 "right": right
             }
+
+        while self._lookahead["type"] == "EQUAL_OPERATOR":
+            operator = self._eat("EQUAL_OPERATOR")
+
+            right = self.BinaryExpression()
+
+            left = {
+                "type": "BinaryExpression",
+                "left": left,
+                "operator": operator,
+                "right": right
+            }
+
         return left
     
     def MultiplicativeExpression(self):
