@@ -50,6 +50,8 @@ class Tokenizer:
 
             if literal_type in ["WHITESPACE", "BCOMMENT","COMMENT", "NEWLINE"]:
                 if literal_type == "BCOMMENT":
+                    # This is done, because it finds only the text inside the """ """,
+                    # but we also need to account for len("""""") == 6.
                     self._coursor += 6
 
                 return self.getNextToken()

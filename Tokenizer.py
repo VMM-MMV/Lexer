@@ -8,14 +8,13 @@ Tokens = [
     [r"\A\blet\b", "DECLARATOR"],
     [r"\A[^\s\W\d]", "IDENTIFIER"],
     [r'\A=(?!=)', "DECLARATOR_OPERATOR"],
+    [r'\A[+\-]', "ADDITIVE_OPERATOR"],
     [r"\A\d+", "NUMBER"],
     [r'\A"[^"]*"', "STRING"],
     [r"\A'[^'']*'", "STRING"],
     # [r'^\"(?:[^"\\]|\\.)*"', "STRING"],
     # [r"^\'(?:[^'\\]|\\.)*'", "STRING"],
 ]
-
-
 
 class Tokenizer:
     def __init__(self, string):
