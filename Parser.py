@@ -28,20 +28,23 @@ class Parser:
         self._eat("IF")
         binary_expression = self.ParanthesizedExpression()
         block_statement = self.BlockStatement()
+        alternative_if = self.AlternateIf()
         return {
             "type": "IfStatement",
             "BooleanStatement": binary_expression,
-            "Consequent": block_statement
+            "IfBlock": block_statement,
+            "AlternativeIf": alternative_if
         }
 
-    # def AlternateIf(self):
-    #     if self._lookahead["type"] == "ELIF":
-           
-    #     self._eat("")
-    
-    # def Altern
-
-
+    def AlternateIf(self):
+        if not self._lookahead:
+            return 
+        
+        if self._lookahead["type"] == "ELSE":
+            self._eat("ELSE")
+            if self._lookahead["type"] == "IF":
+                return self.IfStatement()
+            return self.BlockStatement()
     
     # StatementList : Statement | StatementList Statement ;
     def StatementList(self):
