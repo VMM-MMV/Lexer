@@ -1,7 +1,7 @@
 import re
 
-code = ''''== 5;\n'
+code = '''42 43
 '''
 
-comments = re.findall(r'\A=(?!=)', code, flags=re.MULTILINE)
+comments = re.findall(r'\A\d+', code, flags=re.MULTILINE)
 print(comments)

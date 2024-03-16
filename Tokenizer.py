@@ -15,6 +15,8 @@ Tokens = [
     # [r"^\'(?:[^'\\]|\\.)*'", "STRING"],
 ]
 
+
+
 class Tokenizer:
     def __init__(self, string):
         self._string = string

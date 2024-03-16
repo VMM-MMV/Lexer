@@ -1,31 +1,31 @@
 import re
 
 Tokens = [
-    # [r"^\s+", "WHITESPACE"],
-    # # [r"^\n+", "NEWLINE"],
-    # # [r'^\""".*?"""', "COMMENT"],
-    # [r"^\#.*$", "COMMENT"],
-    # [r"^;" , ";"],
-    # [r"^\d+", "NUMBER"],
-    [r"^pregnancies,", "Pregnancies"],
-    [r"^diagnosis" , 'Diagnosis'],
-    [r"^treatment" , 'Treatment'],
-    [r"^pregnancies" , 'Pregnancies'],
-    [r"^glucose" , 'Glucose'],
-    [r"^bloodPressure" , 'BloodPressure'],
-    [r"^skinThickness" , 'SkinThickness'],
-    [r"^insulin" , 'Insulin'],
-    [r"^bmi" , 'BMI'],
-    [r"^diabetesPedigreeFunction", 'DiabetesPedigreeFunction'],
-    [r"^age", 'Age'],
-    [r"^outcome", 'Outcome'],
-    [r"^[a-zA-Z]+", "ID"],
-    [r"^[0-9]+", "INT"],
-    [r"^[0-9]+(\.[0-9]+)?", "FLOAT"],
-    [r'^ \"(~[\"\r\n])*\" ;$"', "TEXT"],
+    [r"\A\s+", "WHITESPACE"],
+    [r"\A;" , ";"],
+    [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
+    [r"\A\#.*$", "COMMENT"],
+    [r"\A\blet\b", "DECLARATOR"],
+    [r"\Apregnancies", "DECLARATOR"],
+    [r"\Adiagnosis" , 'DECLARATOR'],
+    [r"\Atreatment" , 'DECLARATOR'],
+    [r"\Aglucose" , 'DECLARATOR'],
+    [r"\AbloodPressure" , 'DECLARATOR'],
+    [r"\AskinThickness" , 'DECLARATOR'],
+    [r"\Ainsulin" , 'DECLARATOR'],
+    [r"\Abmi" , 'DECLARATOR'],
+    [r"\AdiabetesPedigreeFunction", 'DECLARATOR'],
+    [r"\Aage", 'DECLARATOR'],
+    [r"\Aoutcome", 'DECLARATOR'],
+    [r'\A=(?!=)', "DECLARATOR_OPERATOR"],
+    [r"\A\d+", "NUMBER"],
+    [r'\A"[^"]*"', "STRING"],
+    [r"\A'[^'']*'", "STRING"]
     # [r'^\"(?:[^"\\]|\\.)*"', "STRING"],
     # [r"^\'(?:[^'\\]|\\.)*'", "STRING"],
 ]
+
+
 
 class Tokenizer:
     def __init__(self, string):
@@ -47,11 +47,14 @@ class Tokenizer:
             if len(match) == 0:
                 continue
 
-            if literal_type in ["WHITESPACE", "COMMENT"]:
-                self._coursor += len(match[0])
+            self._coursor += len(match[0])
+
+            if literal_type in ["WHITESPACE", "BCOMMENT","COMMENT", "NEWLINE"]:
+                if literal_type == "BCOMMENT":
+                    self._coursor += 6
+
                 return self.getNextToken()
             
-            self._coursor += len(match[0])
             return {
                 "type": literal_type,
                 "value": match[0]

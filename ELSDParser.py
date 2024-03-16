@@ -26,15 +26,36 @@ class Parser:
 
     # Statement : ExpressionStatement ;
     def Statement(self):
+        if self._lookahead["type"] == "DECLARATOR":
+            return self.VariableDeclaration()
+
         return self.ExpressionStatement()
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):
         expression = self.Expression()
-        # self._eat(";")
+        self._eat(";")
         return {
             "type": "ExpressionStatement",
             "expression": expression
+        }
+    
+    def VariableDeclaration(self):
+        declaration = self.VariableDeclarator()
+        self._eat(";")
+        return {
+            "type": "VariableDeclaration",
+            "declarations": declaration
+        }
+    
+    def VariableDeclarator(self):
+        declarator_token = self._eat("DECLARATOR")
+        self._eat("DECLARATOR_OPERATOR")
+        literal = self.Literal()
+        return {
+            "type": "VariableDeclarator",
+            "id": declarator_token["value"],
+            "init": literal
         }
     
     # Expression : Literal ;
@@ -43,18 +64,22 @@ class Parser:
     
     # Literal : NumericLiteral | StringLiteral ;
     def Literal(self):
-        print(self._lookahead["type"])
-        token = self._eat(self._lookahead["type"])
-        return {
-            "type": "Literal",
-            "value": token["value"]
-        }
+        match self._lookahead["type"]:
+            case "STRING": return self.StringLiteral()
+            case "NUMBER": return self.NumericLiteral()
 
     def NumericLiteral(self):
         token = self._eat("NUMBER")
         return {
             "type": "NumericLiteral",
             "value": int(token["value"])
+        }
+    
+    def StringLiteral(self):
+        token = self._eat("STRING")
+        return {
+            "type": "StringLiteral",
+            "value": token["value"]
         }
     
     def _eat(self, tokenType):

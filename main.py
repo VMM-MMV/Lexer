@@ -2,27 +2,16 @@ from Parser import *
 import json
 parser = Parser()
 code = '''
-""" 
-This is comment
-Another comment
-'HI' 
+let a = "letter";
+let b = "not_letter";
+42;'''
+result = parser.parse(code)
+"""
+this is a comment
 """
 
-40;
-
-
-40;
-"idk";
-42;
-
-
-
-
-'''
-result = parser.parse(code)
 
 print(json.dumps(result, indent=2)) 
-
 
 '''
 """ 
