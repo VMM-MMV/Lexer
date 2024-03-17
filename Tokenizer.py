@@ -13,7 +13,7 @@ Tokens = [
     # [r"\A\belif\b", "ELIF"],
     [r"\A\belse\b", "ELSE"],
     [r"\A\blet\b", "DECLARATOR"],
-    [r"\A[^\s\W\d]", "VARIABLE"],
+    [r"\A[^\s\W\d]+", "VARIABLE"],
     [r'\A=(?!=)', "DECLARATOR_OPERATOR"],
     [r'\A==(?!=)', "EQUAL_OPERATOR"],
     [r'\A[+\-]', "ADDITIVE_OPERATOR"],
