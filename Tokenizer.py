@@ -10,6 +10,7 @@ Tokens = [
     [r'\A"""([\s\S]*?)"""', "BCOMMENT"],
     [r"\A\#.*$", "COMMENT"],
     [r"\A\bif\b", "IF"],
+    [r"\A\bprint\b", "PRINT"],
     # [r"\A\belif\b", "ELIF"],
     [r"\A\belse\b", "ELSE"],
     [r"\A\blet\b", "DECLARATOR"],

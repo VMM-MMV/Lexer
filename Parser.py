@@ -32,6 +32,7 @@ class Parser:
         match self._lookahead["type"]:
             case "DECLARATOR": return self.VariableDeclaration()
             case "IF": return self.IfStatement()
+            case "PRINT": return self.PrintStatement()
             case _: return self.ExpressionStatement()
 
     def IfStatement(self):
@@ -68,6 +69,17 @@ class Parser:
                 "IfBlock": self.BlockStatement()
             }
     
+    # PrintStatement : PRINT '(' Expression ')' ';' ;
+    def PrintStatement(self):
+        self._eat("PRINT")
+        self._eat("(")
+        expression = self.Expression()
+        self._eat(")")
+        self._eat(";")
+        return {
+            "type": "PrintStatement",
+            "expression": expression
+        }
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):

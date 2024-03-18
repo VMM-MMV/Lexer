@@ -5,14 +5,14 @@ code = '''
 # let liviu = "Mujik";
 
 if (1) {
-    2;
+    print(2);
 }
  else if (3) {
-    4;
+    print(4);
 # } else if (5) {
-#     "Bye2";
+#     print("Bye2");
 } else {
-    5;
+    print(5);
 }
 '''
 result = parser.parse(code)
