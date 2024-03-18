@@ -7,5 +7,6 @@ with open("mylang.jora", 'r') as file:
 parser = Parser()
 compiler = Compiler()
 AST = parser.parse(contents)
-compiler.handle_block(AST)
-print(json.dumps(AST, indent=2))
+code = compiler.handle_block(AST, 0)
+print(code)
+# print(json.dumps(AST, indent=2))

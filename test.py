@@ -1,15 +1,11 @@
-import re
+a = 0
+b = 1
 
-code = '''
-#This-is-comment
-#Another comment
-#This thing will not be read
-sup
-'''
+if (a == 1):
 
-match = re.findall(r"\#[\S]+", code, flags=re.MULTILINE)
-print(match)
-for m in match:
-    code = code.replace(m, "")
-# [code.replace(x, "") for x in match]
-print(code)
+  (2 + (2 * 3))
+  if (b == 2):
+
+    "bye"
+123
+"a"
