@@ -11,6 +11,7 @@ class Compiler:
         if node.get("expression"):
             node = node["expression"]
 
+        print(node)
         if node["type"] == "BinaryExpression":
             return f"({self.handle_binary_expression(node['left'])} {self.handle_binary_expression(node['operator'])} {self.handle_binary_expression(node['right'])})"
         else:
@@ -57,6 +58,9 @@ class Compiler:
             if node["type"] == "VariableDeclaration":
                 self.code += "\n"
                 self.code += self.get_indent(indent) + str(self.handle_variable_declaration(node, indent))
+            
+            if node["type"] == "PrintStatement":
+                self.code += f"print({self.handle_binary_expression(node)})"
                 
             for key, value in node.items():
                 if key != 'type' and isinstance(value, dict):

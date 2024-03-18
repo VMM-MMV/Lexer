@@ -12,7 +12,7 @@ if (1) {
 # } else if (5) {
 #     print("Bye2");
 } else {
-    print(5);
+    5+4;
 }
 '''
 result = parser.parse(code)
