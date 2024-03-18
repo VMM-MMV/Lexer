@@ -14,6 +14,10 @@ class Compiler:
             return f"({self.handle_expression(node['left'])} {self.handle_expression(node['operator'])} {self.handle_expression(node['right'])})"
         else:
             return str(node["value"])
+    
+    def handle_variable_declaration(self, node):
+        node = node["declarations"]
+        return f"{node['id']['value']} = {self.handle_expression(node['init'])}"
         
     def handleIf(self, node):
         def handle_boolean_statement(node):
@@ -48,6 +52,9 @@ class Compiler:
             
             if node["type"] == "ExpressionStatement":
                 print(self.handle_expression(node))
+
+            if node["type"] == "VariableDeclaration":
+                print(self.handle_variable_declaration(node))
                 
 
             for key, value in node.items():

@@ -1,8 +1,8 @@
-# let liviu = "Mujik";
+let liviu = "Mujik" + "Pezdos";
 
-"a" + "b" * "c";
-123;
-"fff";
+#"a" + "b" * "c";
+#123;
+#"fff";
 #if (a == 1) {
 #    2+2*3;
 #}
