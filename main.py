@@ -2,7 +2,7 @@ from Parser import *
 import json
 parser = Parser()
 code = '''
-# let liviu = "Mujik";
+let liviu = "Mujik";
 
 if (1) {
     print(2);
@@ -12,7 +12,7 @@ if (1) {
 # } else if (5) {
 #     print("Bye2");
 } else {
-    5+4;
+    (5+4)*10;
 }
 '''
 result = parser.parse(code)

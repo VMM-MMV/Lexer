@@ -14,7 +14,11 @@ try:
     parser = Parser()
     compiler = Compiler()
     AST = parser.parse(contents)
-    compiler.getCode(AST)
+    code = compiler.handle_block(AST, 0)
+    filename = filename.split(".")[0]
+    print(filename)
+    with open(filename + ".py", 'w') as file:  # Open in text mode ('w')
+        file.write(code)
 
 except FileNotFoundError:
     print(f"Error: File '{filename}' not found.")

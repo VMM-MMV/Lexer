@@ -60,7 +60,8 @@ class Compiler:
                 self.code += self.get_indent(indent) + str(self.handle_variable_declaration(node, indent))
             
             if node["type"] == "PrintStatement":
-                self.code += f"print({self.handle_binary_expression(node)})"
+                self.code += "\n"
+                self.code += self.get_indent(indent) + f"print({self.handle_binary_expression(node)})"
                 
             for key, value in node.items():
                 if key != 'type' and isinstance(value, dict):
