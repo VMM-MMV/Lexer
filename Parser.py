@@ -15,37 +15,7 @@ class Parser:
             "body": self.StatementList()
         }
     
-    def BlockStatement(self):
-        self._eat("{")
-        statement_list = self.StatementList()
-        self._eat("}")
-        return {
-            "type": "BlockStatement",
-            "body": statement_list
-        }
 
-    def IfStatement(self):
-        self._eat("IF")
-        binary_expression = self.ParanthesizedExpression()
-        block_statement = self.BlockStatement()
-        alternative_if = self.AlternateIf()
-        return {
-            "type": "IfStatement",
-            "BooleanStatement": binary_expression,
-            "IfBlock": block_statement,
-            "AlternativeIf": alternative_if
-        }
-
-    def AlternateIf(self):
-        if not self._lookahead:
-            return 
-        
-        if self._lookahead["type"] == "ELSE":
-            self._eat("ELSE")
-            if self._lookahead["type"] == "IF":
-                return self.IfStatement()
-            return self.BlockStatement()
-    
     # StatementList : Statement | StatementList Statement ;
     def StatementList(self):
         statementList = []
@@ -63,6 +33,38 @@ class Parser:
             case "DECLARATOR": return self.VariableDeclaration()
             case "IF": return self.IfStatement()
             case _: return self.ExpressionStatement()
+
+    def IfStatement(self):
+        self._eat("IF")
+        binary_expression = self.ParanthesizedExpression()
+        block_statement = self.BlockStatement()
+        alternative_if = self.AlternateIf()
+        return {
+            "type": "IfStatement",
+            "BooleanStatement": binary_expression,
+            "IfBlock": block_statement,
+            "AlternativeIf": alternative_if
+        }
+
+    def BlockStatement(self):
+        self._eat("{")
+        statement_list = self.StatementList()
+        self._eat("}")
+        return {
+            "type": "BlockStatement",
+            "body": statement_list
+        }
+    
+    def AlternateIf(self):
+        if not self._lookahead:
+            return 
+        
+        if self._lookahead["type"] == "ELSE":
+            self._eat("ELSE")
+            if self._lookahead["type"] == "IF":
+                return self.IfStatement()
+            return self.BlockStatement()
+    
     
     # ExpressionStatement : Expression ';' ;
     def ExpressionStatement(self):

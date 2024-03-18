@@ -1,8 +1,11 @@
 # let liviu = "Mujik";
 
-if (a == 1) {
-    2+2*3;
-}
+"a" + "b" * "c";
+123;
+"fff";
+#if (a == 1) {
+#    2+2*3;
+#}
 #  else if (a == 2) {
 #     "Bye";
 # } else if (a == 3) {
