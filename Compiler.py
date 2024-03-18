@@ -20,12 +20,16 @@ class Compiler:
         
     def handleIf(self, node, indent):
         if_code = "\n" + self.get_indent(indent) + "if"
-        indent += 2
         if node.get("BooleanStatement"):
             if_code += " " + self.handle_binary_expression(node["BooleanStatement"]) + ":"
 
         if node.get("IfBlock"):
-            if_code += "\n" + self.get_indent(indent) + self.handle_block(node["IfBlock"], indent)
+            if_code += "\n" + self.get_indent(indent+2) + self.handle_block(node["IfBlock"], indent+2)
+        
+        if node.get("AlternativeIf"):
+            if_code += "\n" + self.get_indent(indent) + "else:"
+            if_code += "\n" + self.get_indent(indent) + self.handle_block(node["AlternativeIf"], indent+2)
+        
         return if_code
         
     def handle_block(self, node, indent):
