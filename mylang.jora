@@ -4,14 +4,48 @@
 #123;
 #"fff";
 if (1) {
+    if (1) {
+        "1";
+    } else if (a == 2) {
+        "Bye";
+    } else if (a == 3) {
+        "F";
+    } else {
+        "3";
+    }
     "1";
-    if (2) {
-        "2";
+} else if (a == 2) {
+    if (1) {
+        "1";
+    } else if (a == 2) {
+        "Bye";
+    } else if (a == 3) {
+        "F";
+    } else {
+        "3";
+    }
+    "Bye";
+} else if (a == 3) {
+    "F";
+    if (1) {
+        "1";
+    } else if (a == 2) {
+        "Bye";
+    } else if (a == 3) {
+        "F";
+    } else {
+        "3";
     }
 } else {
     "3";
-    if (4) {
-        "4";
+    if (1) {
+        "1";
+    } else if (a == 2) {
+        "Bye";
+    } else if (a == 3) {
+        "F";
+    } else {
+        "3";
     }
 }
 

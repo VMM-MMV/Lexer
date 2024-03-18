@@ -1,3 +1,5 @@
+import re
+import autopep8
 class Compiler:
     def get_indent(self, indent):
         return " " * indent
@@ -27,8 +29,8 @@ class Compiler:
             if_code += "\n" + self.get_indent(indent+2) + self.handle_block(node["IfBlock"], indent+2)
         
         if node.get("AlternativeIf"):
-            if_code += "\n" + self.get_indent(indent) + "else:"
-            if_code += "\n" + self.get_indent(indent) + self.handle_block(node["AlternativeIf"], indent+2)
+            if_code += "\n" + self.get_indent(indent) + "else"
+            if_code += "\n" + self.get_indent(indent) + self.handleIf(node["AlternativeIf"], indent)
         
         return if_code
         
@@ -64,5 +66,15 @@ class Compiler:
                         walk_ast(item, indent)  # Items within a list            
             
         walk_ast(node, indent)
+        matches = re.findall(r"else\s+(?:\n\s*)?if\s+\(.*?\):", self.code, flags=re.MULTILINE)
+        for matchh in matches:
+            print(matchh.find("if"))
+            len_of_if = 2
+            self.code = self.code.replace(matchh, "elif"+ matchh[matchh.find("if")+len_of_if:])
+        matches = re.findall(r"else\s+(?:\n\s*)?if", self.code, flags=re.MULTILINE)
+        for matchh in matches:
+            print(matchh.find("if"))
+            len_of_if = 2
+            self.code = self.code.replace(matchh, "else:")
         return self.code
 

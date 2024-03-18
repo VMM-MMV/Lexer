@@ -4,16 +4,16 @@ parser = Parser()
 code = '''
 # let liviu = "Mujik";
 
-if (a == 1) {
-    2+2*3;
+if (1) {
+    2;
 }
-#  else if (a == 2) {
-#     "Bye";
-# } else if (a == 3) {
+ else if (3) {
+    4;
+# } else if (5) {
 #     "Bye2";
-# } else {
-#     "IDK";
-# }
+} else {
+    5;
+}
 '''
 result = parser.parse(code)
 

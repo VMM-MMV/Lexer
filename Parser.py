@@ -63,7 +63,10 @@ class Parser:
             self._eat("ELSE")
             if self._lookahead["type"] == "IF":
                 return self.IfStatement()
-            return self.BlockStatement()
+
+            return {
+                "IfBlock": self.BlockStatement()
+            }
     
     
     # ExpressionStatement : Expression ';' ;
